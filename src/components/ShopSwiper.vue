@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const activeIndex = ref(0)
+let activeIndex = ref(0)
+const onChange: UniHelper.SwiperOnChange = (event) => {
+  activeIndex.value = event.detail.current
+}
 </script>
 
 <template>
   <view class="carousel">
-    <swiper :circular="true" :autoplay="true" :interval="3000">
+    <swiper :circular="true" :autoplay="true" :interval="3000" @change="onChange">
       <swiper-item>
         <navigator url="/pages/index/index" hover-class="none" class="navigator">
           <image
@@ -48,8 +51,8 @@ const activeIndex = ref(0)
 </template>
 
 <style lang="scss">
-:host {
-}
+// :host {
+// }
 /* 轮播图 */
 .carousel {
   height: 100%;
