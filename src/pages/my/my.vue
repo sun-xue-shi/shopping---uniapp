@@ -7,7 +7,7 @@ const memberStore = useMemberStore()
 const getData = async () => {
   const res = await http<string[]>({
     method: 'GET',
-    url: '/member/profile',
+    url: '/home/banner',
   })
   console.log(res.result)
 }
@@ -20,7 +20,7 @@ const getData = async () => {
       @tap="
         memberStore.setProfile({
           nickname: '6666',
-          token: 5555,
+          // token: 5555,
         })
       "
       size="mini"
