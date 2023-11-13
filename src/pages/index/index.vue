@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import CustomNavbar from '@/components/CustomNavbar.vue'
 import ShopSwiper from '@/components/ShopSwiper.vue'
+import CustomNavbar from './components/CustomNavbar.vue'
+import CategoryPanel from './components/CategoryPanel.vue'
 import { getHomeBanner } from '@/services/home'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
@@ -20,9 +21,12 @@ onLoad(() => {
 <template>
   <CustomNavbar />
   <ShopSwiper :list="bannerList" />
+  <CategoryPanel />
   <view class="index">首页</view>
 </template>
 
 <style lang="scss">
-//
+page {
+  background-color: #f7f7f7;
+}
 </style>
