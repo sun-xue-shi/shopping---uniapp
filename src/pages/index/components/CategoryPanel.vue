@@ -7,6 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
+  <!-- 首页分类 -->
   <view class="category">
     <navigator
       class="category-item"
