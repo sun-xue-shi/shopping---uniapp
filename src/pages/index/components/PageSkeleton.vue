@@ -1,3 +1,5 @@
+<!-- 微信开发者工具自动生成 -->
+
 <template name="skeleton">
   <view class="sk-container">
     <view is="components/ShopSwiper">
