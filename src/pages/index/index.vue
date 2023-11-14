@@ -4,6 +4,7 @@ import CustomNavbar from './components/CustomNavbar.vue'
 import CategoryPanel from './components/CategoryPanel.vue'
 import HotPanel from './components/HotPanel.vue'
 import GuessLike from '@/components/GuessLike.vue'
+import PageSkeleton from './components/PageSkeleton.vue'
 import { getHomeBanner, getHomeCategory, getHomeHot } from '@/services/home'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
@@ -30,13 +31,16 @@ const getHomeHotData = async () => {
   hotList.value = res.result
 }
 
+//加载中标记
+const isLoading = ref(false)
 // 页面加载前获取数据
-onLoad(() => {
-  getHomeBannerData()
-  getHomeCategoryData()
-  getHomeHotData()
+onLoad(async () => {
+  isLoading.value = true
+  await Promise.all([getHomeBannerData(), getHomeCategoryData(), getHomeHotData()])
+  isLoading.value = false
 })
 
+// 猜你喜欢组件实例
 const guessRef = ref<InstanceType<typeof GuessLike>>()
 // 滚动触底
 const scrollToLower = () => {
@@ -71,14 +75,18 @@ const onRefresh = async () => {
     class="scroll-view"
     scroll-y
   >
-    <!-- 轮播图 -->
-    <ShopSwiper :list="bannerList" />
-    <!-- 分类 -->
-    <CategoryPanel :list="categoryList" />
-    <!-- 热门 -->
-    <HotPanel :list="hotList" />
-    <!-- 猜你喜欢 -->
-    <GuessLike ref="guessRef" />
+    <!-- 骨架屏 -->
+    <PageSkeleton v-if="isLoading" />
+    <template v-else>
+      <!-- 轮播图 -->
+      <ShopSwiper :list="bannerList" />
+      <!-- 分类 -->
+      <CategoryPanel :list="categoryList" />
+      <!-- 热门 -->
+      <HotPanel :list="hotList" />
+      <!-- 猜你喜欢 -->
+      <GuessLike ref="guessRef" />
+    </template>
   </scroll-view>
 </template>
 
