@@ -30,19 +30,47 @@ const getHomeHotData = async () => {
   hotList.value = res.result
 }
 
-// 加载前获取数据
+// 页面加载前获取数据
 onLoad(() => {
   getHomeBannerData()
   getHomeCategoryData()
   getHomeHotData()
 })
+
+const guessRef = ref<InstanceType<typeof GuessLike>>()
+// 滚动触底
+const scrollToLower = () => {
+  guessRef.value?.getMore()
+}
+
+// 下拉刷新
+const isTriggered = ref(false)
+const onRefresh = async () => {
+  isTriggered.value = true
+  guessRef.value?.resetData()
+  // 一次性发送加载数据请求
+  await Promise.all([
+    getHomeBannerData(),
+    getHomeCategoryData(),
+    getHomeHotData(),
+    guessRef.value?.getMore(),
+  ])
+  isTriggered.value = false
+}
 </script>
 
 <template>
   <!-- 自定义导航 -->
   <CustomNavbar />
   <!-- 滚动区域 -->
-  <scroll-view class="scroll-view" scroll-y>
+  <scroll-view
+    refresher-enabled
+    @refresherrefresh="onRefresh"
+    :refresher-triggered="isTriggered"
+    @scrolltolower="scrollToLower"
+    class="scroll-view"
+    scroll-y
+  >
     <!-- 轮播图 -->
     <ShopSwiper :list="bannerList" />
     <!-- 分类 -->
@@ -50,7 +78,7 @@ onLoad(() => {
     <!-- 热门 -->
     <HotPanel :list="hotList" />
     <!-- 猜你喜欢 -->
-    <GuessLike />
+    <GuessLike ref="guessRef" />
   </scroll-view>
 </template>
 

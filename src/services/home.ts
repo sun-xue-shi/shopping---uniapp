@@ -1,4 +1,5 @@
-import type { Banner, Category, HotItem } from '@/types/home'
+import type { Banner, Category, GuessItem, HotItem } from '@/types/home'
+import type { PageParams, PageResult } from '@/types/global'
 import { http } from '@/utils/http'
 
 // 轮播图
@@ -23,5 +24,14 @@ export const getHomeHot = () => {
   return http<HotItem[]>({
     method: 'GET',
     url: '/home/hot/mutli',
+  })
+}
+
+// 猜你喜欢
+export const getGuessLike = (data?: PageParams) => {
+  return http<PageResult<GuessItem>>({
+    method: 'GET',
+    url: '/home/goods/guessLike',
+    data,
   })
 }

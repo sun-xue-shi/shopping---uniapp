@@ -13,6 +13,7 @@ export type Banner = {
   type: number
 }
 
+// 首页分类
 export type Category = {
   // id
   id: string
@@ -24,6 +25,7 @@ export type Category = {
   icon: string
 }
 
+// 热门推荐
 export type HotItem = {
   /** 说明 */
   alt: string
@@ -37,4 +39,22 @@ export type HotItem = {
   title: string
   /** 推荐类型 */
   type: string
+}
+
+// 猜你喜欢
+export type GuessItem = {
+  /** 商品描述 */
+  desc: string
+  /** 商品折扣 */
+  discount: number
+  /** id */
+  id: string
+  /** 商品名称 */
+  name: string
+  /** 商品已下单数量 */
+  orderNum: number
+  /** 商品图片 */
+  picture: string
+  /** 商品价格 */
+  price: number
 }
