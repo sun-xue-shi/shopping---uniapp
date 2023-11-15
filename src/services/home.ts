@@ -27,7 +27,7 @@ export const getHomeHot = () => {
   })
 }
 
-// 猜你喜欢
+// 首页猜你喜欢
 export const getGuessLike = (data?: PageParams) => {
   return http<PageResult<GuessItem>>({
     method: 'GET',

@@ -19,6 +19,8 @@
     {
       "path": "pages/my/my",
       "style": {
+        "navigationBarTextStyle": "white",
+        "navigationStyle": "custom",
         "navigationBarTitleText": "我的"
       }
     },
@@ -91,5 +93,26 @@
         "selectedIconPath": "static/tabs/user_selected.png"
       }
     ]
+  },
+  // 分包
+  "subPackages": [
+    {
+      "root": "pagesMember",
+      "pages": [
+        {
+          "path": "settings/settings",
+          "style": {
+            "navigationBarTitleText": "设置"
+          }
+        }
+      ]
+    }
+  ],
+  // 预下载规则
+  "preloadRule": {
+    "pages/my/my": {
+      "network": "all",
+      "packages": ["pagesMember"]
+    }
   }
 }

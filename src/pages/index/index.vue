@@ -9,6 +9,7 @@ import { getHomeBanner, getHomeCategory, getHomeHot } from '@/services/home'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import type { Banner, Category, HotItem } from '@/types/home'
+import { useGuessList } from '@/composables'
 
 // 轮播图数据
 const bannerList = ref<Banner[]>([])
@@ -40,12 +41,8 @@ onLoad(async () => {
   isLoading.value = false
 })
 
-// 猜你喜欢组件实例
-const guessRef = ref<InstanceType<typeof GuessLike>>()
-// 滚动触底
-const scrollToLower = () => {
-  guessRef.value?.getMore()
-}
+// 猜你喜欢
+const { guessRef, onScrollToLower } = useGuessList()
 
 // 下拉刷新
 const isTriggered = ref(false)
@@ -71,7 +68,7 @@ const onRefresh = async () => {
     refresher-enabled
     @refresherrefresh="onRefresh"
     :refresher-triggered="isTriggered"
-    @scrolltolower="scrollToLower"
+    @scrolltolower="onScrollToLower"
     class="scroll-view"
     scroll-y
   >
