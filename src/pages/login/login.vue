@@ -24,7 +24,7 @@ const onGetphonenumberSimple = async () => {
   memberStore.setProfile(res.result)
   uni.showToast({ icon: 'success', title: '登陆成功' })
   setTimeout(() => {
-    uni.switchTab({ url: '/pages/index/index' })
+    uni.navigateBack()
   }, 500)
 }
 </script>

@@ -15,7 +15,7 @@ const orderTypes = [
 // 获取用户信息
 const memberStore = useMemberStore()
 
-// 猜你喜欢
+// 猜你喜欢分页加载
 const { guessRef, onScrollToLower } = useGuessList()
 </script>
 
