@@ -99,9 +99,16 @@ const skuArrText = computed(() => {
   return skuRef.value?.selectArr?.join(' ').trim() || '请选择商品规格'
 })
 
+// 添加购物车
 const onAddCart = async (ev: SkuPopupEvent) => {
   await postMemberCart({ skuId: ev._id, count: ev.buy_num })
   uni.showToast({ title: '添加成功' })
+  isShow.value = false
+}
+
+// 立即购买跳转订单
+const onBuyNow = (ev: SkuPopupEvent) => {
+  uni.navigateTo({ url: `/pagesOrder/create/create?skuId=${ev._id}&count=${ev.buy_num}` })
   isShow.value = false
 }
 </script>
@@ -114,6 +121,7 @@ const onAddCart = async (ev: SkuPopupEvent) => {
     :buy-now-background-color="`#27BA9B`"
     ref="skuRef"
     @add-cart="onAddCart"
+    @buy-now="onBuyNow"
   />
   <scroll-view scroll-y class="viewport" v-if="!isLoading">
     <!-- 基本信息 -->

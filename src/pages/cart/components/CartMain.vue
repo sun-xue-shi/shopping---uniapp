@@ -80,7 +80,7 @@ const onPayment = () => {
     uni.showToast({ icon: 'none', title: '请选择商品' })
     return
   }
-  uni.showToast({ title: '即将跳转至订单页...' })
+  uni.navigateTo({ url: '/pagesOrder/create/create' })
 }
 
 // 猜你喜欢分页加载

@@ -132,6 +132,31 @@
           }
         }
       ]
+    },
+    {
+      "root": "pagesOrder",
+      "pages": [
+        {
+          "path": "create/create",
+          "style": {
+            "navigationBarTitleText": "订单"
+          }
+        },
+        {
+          "path": "detail/detail",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTextStyle": "white",
+            "navigationBarTitleText": "订单详情"
+          }
+        },
+        {
+          "path": "payment/payment",
+          "style": {
+            "navigationBarTitleText": "支付成功"
+          }
+        }
+      ]
     }
   ],
   // 预下载规则

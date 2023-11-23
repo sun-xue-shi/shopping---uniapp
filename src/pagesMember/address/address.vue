@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { deleteMemberAddressById, getMemberAddress } from '@/services/address'
+import { useAddressStore } from '@/stores/modules/address'
 import type { AddressItem } from '@/types/address'
 import { onShow } from '@dcloudio/uni-app'
 import { ref } from 'vue'
@@ -27,6 +28,13 @@ const onDeleteAddress = (id: string) => {
     },
   })
 }
+
+// 点击选择地址
+const onChangeAddress = (item: AddressItem) => {
+  const addressStore = useAddressStore()
+  addressStore.changeSelectedAddress(item)
+  uni.navigateBack()
+}
 </script>
 
 <template>
@@ -43,8 +51,11 @@ const onDeleteAddress = (id: string) => {
                 <text class="contact">{{ item.contact }}</text>
                 <text v-if="item.isDefault" class="badge">默认</text>
               </view>
-              <view class="locate">{{ item.fullLocation }} {{ item.address }}</view>
+              <view class="locate" @tap="onChangeAddress(item)"
+                >{{ item.fullLocation }} {{ item.address }}</view
+              >
               <navigator
+                @tap.stop="() => {}"
                 class="edit"
                 hover-class="none"
                 :url="`/pagesMember/address-form/address-form?id=${item.id}`"
