@@ -108,7 +108,8 @@ const onOrderSend = async () => {
     order.value!.orderState = OrderState.DaiShouHuo
   }
 }
-// 支付成功
+
+// 订单支付
 const onOrderPay = async () => {
   // 通过环境变量区分开发环境
   if (import.meta.env.DEV) {
