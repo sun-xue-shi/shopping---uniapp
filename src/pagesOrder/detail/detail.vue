@@ -114,16 +114,18 @@ const onOrderPay = async () => {
   // 通过环境变量区分开发环境
   if (import.meta.env.DEV) {
     // 开发环境：模拟支付，修改订单状态为已支付
-    // const res = await getPayMockAPI({ orderId: query.id })
+    const res = await getPayMockAPI({ orderId: query.id })
     // console.log(res)
     order.value!.orderState = OrderState.DaiFaHuo
   } else {
+    // #ifdef MP-WEIXIN
     // 生产环境：获取支付参数 + 发起微信支付
-    // const res = await getPayWxPayMiniPayAPI({ orderId: query.id })
-    // await wx.requestPayment(res.result)
+    const res = await getPayWxPayMiniPayAPI({ orderId: query.id })
+    await wx.requestPayment(res.result)
+    // #endif
   }
   // 关闭当前页，再跳转支付结果页
-  // uni.redirectTo({ url: `/pagesOrder/payment/payment?id=${query.id}` })
+  uni.redirectTo({ url: `/pagesOrder/payment/payment?id=${query.id}` })
 }
 
 onLoad(() => {
@@ -137,9 +139,9 @@ const onOrderConfirm = () => {
     content: '为保障您的权益，请收到货并确认无误后，再确认收货',
     success: async (success) => {
       if (success.confirm) {
-        // const res = await putMemberOrderReceiptByIdAPI(query.id)
+        const res = await putMemberOrderReceiptByIdAPI(query.id)
         // 更新订单状态
-        // order.value = res.result
+        order.value = res.result
         uni.showToast({ icon: 'success', title: '确认收货成功' })
         order.value!.orderState = OrderState.YiWanCheng
       }

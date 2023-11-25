@@ -150,6 +150,12 @@
 </template>
 
 <style>
+/* #ifdef H5 || APP-PLUS*/
+@import '@/components/style/ShopSwiper.css';
+@import './style/CategoryPanel.css';
+@import './style/HotPanel.css';
+@import '@/components/style/GuessLike.css';
+/* #endif */
 .sk-transparent {
   color: transparent !important;
 }

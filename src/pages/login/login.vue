@@ -4,6 +4,7 @@ import { useMemberStore } from '@/stores'
 import { onLoad } from '@dcloudio/uni-app'
 
 // 快捷登录获取三个参数
+// #ifdef MP-WEIXIN
 let code = ''
 onLoad(async () => {
   const res = await wx.login()
@@ -16,6 +17,7 @@ const onGetphonenumber: UniHelper.ButtonOnGetphonenumber = async (ev) => {
   const res = await postLoginWxmin({ code, iv, encryptedData })
   uni.showToast({ icon: 'success', title: '登陆成功' })
 }
+// #endif
 
 // 模拟登录
 const onGetphonenumberSimple = async () => {
@@ -38,15 +40,19 @@ const onGetphonenumberSimple = async () => {
     </view>
     <view class="login">
       <!-- 网页端表单登录 -->
-      <!-- <input class="input" type="text" placeholder="请输入用户名/手机号码" /> -->
-      <!-- <input class="input" type="text" password placeholder="请输入密码" /> -->
-      <!-- <button class="button phone">登录</button> -->
+      <!-- #ifdef H5 -->
+      <input class="input" type="text" placeholder="请输入用户名/手机号码" />
+      <input class="input" type="text" password placeholder="请输入密码" />
+      <button class="button phone">登录</button>
+      <!-- #endif -->
 
       <!-- 小程序端授权登录 -->
+      <!-- #ifdef MP-WEIXIN -->
       <button class="button phone" @getphonenumber="onGetphonenumber" open-type="getPhoneNumber">
         <text class="icon icon-phone"></text>
         手机号快捷登录
       </button>
+      <!-- #endif -->
       <view class="extra">
         <view class="caption">
           <text>其他登录方式</text>

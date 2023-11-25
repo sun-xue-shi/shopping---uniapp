@@ -22,30 +22,45 @@ onLoad(() => {
 //修改头像
 const memberStore = useMemberStore()
 const onAvatarChange = () => {
+  // #ifdef MP-WEIXIN
   uni.chooseMedia({
     count: 1,
     mediaType: ['image'],
     success: (res) => {
       const { tempFilePath } = res.tempFiles[0]
-      uni.uploadFile({
-        name: 'file',
-        filePath: tempFilePath,
-        url: '/member/profile/avatar',
-        success: (res) => {
-          if (res.statusCode === 200) {
-            const avatar = JSON.parse(res.data).result.avatar
-            profile.value!.avatar = avatar
-            memberStore.profile!.avatar = avatar
-            uni.showToast({ icon: 'success', title: '上传成功' })
-          } else {
-            uni.showToast({ icon: 'error', title: '上传失败' })
-          }
-        },
-      })
+      uploadFile(tempFilePath)
+    },
+  })
+  // #endif
+  // #ifdef APP-PLUS || H5
+  uni.chooseImage({
+    count: 1,
+    success: (res) => {
+      const tempFilePath = res.tempFilePaths[0]
+      uploadFile(tempFilePath)
+    },
+  })
+  // #endif
+}
+
+// 文件上传
+const uploadFile = (tempFilePath: string) => {
+  uni.uploadFile({
+    name: 'file',
+    filePath: tempFilePath,
+    url: '/member/profile/avatar',
+    success: (res) => {
+      if (res.statusCode === 200) {
+        const avatar = JSON.parse(res.data).result.avatar
+        profile.value!.avatar = avatar
+        memberStore.profile!.avatar = avatar
+        uni.showToast({ icon: 'success', title: '上传成功' })
+      } else {
+        uni.showToast({ icon: 'error', title: '上传失败' })
+      }
     },
   })
 }
-
 // 修改性别
 const onGenderChange: UniHelper.RadioGroupOnChange = (ev) => {
   profile.value.gender = ev.detail.value as Gender

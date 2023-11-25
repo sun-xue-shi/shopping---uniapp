@@ -55,7 +55,7 @@ const onChangeAddress = (item: AddressItem) => {
                 >{{ item.fullLocation }} {{ item.address }}</view
               >
               <navigator
-                @tap.stop="() => {}"
+                @tap.prevent="() => {}"
                 class="edit"
                 hover-class="none"
                 :url="`/pagesMember/address-form/address-form?id=${item.id}`"
